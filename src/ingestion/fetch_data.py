@@ -76,6 +76,8 @@ class DataFetcher:
 if __name__ == "__main__":
     fetcher = DataFetcher()
     
+    tickers = ["TSLA", "GOOG", "spy", "AAPL", "MSFT"]
+    
     data = fetcher.fetch_stock_data(
         ticker="SPY",
         start_date="2020-01-01",
