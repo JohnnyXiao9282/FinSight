@@ -78,7 +78,7 @@ if __name__ == "__main__":
     
     tickers = ["TSLA", "GOOG", "spy", "AAPL", "MSFT"]
     
-    results = fetcher.fetch_multiple_tickers(
+    resultsp = fetcher.fetch_multiple_tickers(
         tickers=tickers,
         start_date="2020-01-01",
         end_date="2024-12-31"
