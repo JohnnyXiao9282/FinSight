@@ -1,0 +1,2 @@
+Report_Date,Ticker,Total_Days,Total_Trades,Correct_Predictions,Accuracy,Initial_Capital,Final_Strategy_Value,Final_Market_Value,Strategy_Return_Pct,Market_Return_Pct,Outperformance_Pct,Profitable,Beats_Market
+2026-02-27 23:32:24,SPY,2754,2712,1546,0.5614,10000.0,65949.07,40018.96,559.49,300.19,259.3,Yes,Yes
