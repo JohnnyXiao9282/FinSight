@@ -80,12 +80,16 @@ class DataFetcher:
 if __name__ == "__main__":
     fetcher = DataFetcher()
     
-    tickers = ["TSLA", "GOOG", "spy", "AAPL", "MSFT"]
+    tickers = [
+        "SPY", "AAPL", "MSFT", "GOOGL", "AMZN", 
+        "NVDA", "META", "TSLA", "BRK-B", "JPM",
+        "V", "UNH", "XOM", "JNJ", "WMT",
+        "MA", "PG", "HD", "CVX", "MRK"
+    ]
     
-    resultsp = fetcher.fetch_multiple_tickers(
+    results = fetcher.fetch_multiple_tickers(
         tickers=tickers,
-        start_date="2020-01-01",
-        end_date="2024-12-31"
+        start_date="2015-01-01"
     )
     
     for ticker, df in results.items():

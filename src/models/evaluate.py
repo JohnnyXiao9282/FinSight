@@ -64,7 +64,7 @@ if __name__ == "__main__":
     data = fetcher.load_raw_data("SPY_raw.csv")
     
     indicators = TechnicalIndicators(data)
-    indicators.add_sma(window=20).add_rsi().add_returns()
+    indicators.add_sma(window=20).add_sma(window=50).add_rsi().add_returns()
     df_with_features = indicators.get_dataframe()
     
     trainer = ModelTrainer()
