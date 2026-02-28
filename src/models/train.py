@@ -35,12 +35,23 @@ class ModelTrainer:
         if drop_cols is None:
             drop_cols = ['Date', 'target', 'future_return']
         
-        feature_cols = [col for col in df.columns if col not in drop_cols]
+        # Handle both single-level and multi-level column names
+        def should_drop(col):
+            if isinstance(col, tuple):
+                return any(d in col for d in drop_cols)
+            return col in drop_cols
+        
+        feature_cols = [col for col in df.columns if not should_drop(col)]
         
         X = df[feature_cols]
+        
+        # Keep only numeric columns (exclude datetime)
+        numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+        X = X[numeric_cols]
+        
         y = df[target_col]
         
-        self.feature_names = feature_cols
+        self.feature_names = numeric_cols
         logger.info(f"Prepared data: X shape {X.shape}, y shape {y.shape}")
         logger.info(f"Class distribution: {y.value_counts().to_dict()}")
         
