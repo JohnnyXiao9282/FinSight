@@ -35,6 +35,10 @@ class DataFetcher:
                 logger.warning(f"No data retrieved for {ticker}")
                 return pd.DataFrame()
             
+            # Flatten multi-level columns from yfinance
+            if isinstance(data.columns, pd.MultiIndex):
+                data.columns = [col[0] if col[1] == '' or col[1] == ticker else f"{col[0]}_{col[1]}" for col in data.columns]
+            
             data.reset_index(inplace=True)
             logger.info(f"Retrieved {len(data)} records for {ticker}")
             return data
