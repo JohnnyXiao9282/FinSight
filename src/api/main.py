@@ -3,8 +3,16 @@ from pydantic import BaseModel
 from typing import List, Dict
 import pandas as pd
 from pathlib import Path
+import joblib
+from src.utils.helpers import load_model
 
 app = FastAPI(title="FinSight API", version="1.0.0")
+
+# Load model and scaler at startup
+MODEL_PATH = Path('models/best_model.pkl')
+SCALER_PATH = Path('models/best_scaler.pkl')
+model = load_model(MODEL_PATH)
+scaler = load_model(SCALER_PATH)
 
 
 class PredictionRequest(BaseModel):
@@ -34,13 +42,17 @@ def health_check():
 @app.post("/predict", response_model=PredictionResponse)
 def predict(request: PredictionRequest):
     try:
-        prediction = 1
-        probability = 0.65
-        regime = "bullish" if prediction == 1 else "bearish"
-        
+        # Convert input features to DataFrame
+        input_df = pd.DataFrame([request.features])
+        # Scale features
+        input_scaled = scaler.transform(input_df)
+        # Predict
+        pred = model.predict(input_scaled)[0]
+        prob = model.predict_proba(input_scaled)[0][1]
+        regime = "bullish" if pred == 1 else "bearish"
         return PredictionResponse(
-            prediction=prediction,
-            probability=probability,
+            prediction=int(pred),
+            probability=float(prob),
             regime=regime
         )
     except Exception as e:
